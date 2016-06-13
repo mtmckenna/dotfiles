@@ -1,1 +1,4 @@
-/Users/mckenna/.ackrc
+--ignore-dir=node_modules
+--ignore-dir=tmp
+--ignore-dir=bower_components
+--ignore-dir=dist

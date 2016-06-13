@@ -1,1 +1,8 @@
-/Users/mckenna/.vimrc.after
+colorscheme zenburn
+set guioptions-=L
+set wildignore+=*/tmp/*,*/dist/*,*/log/*,*/node_modules/*,*/bower_components/*,*/electron-builds/*,*.so,*.swp,*.zip
+set synmaxcol=250
+augroup AuNERDTreeCmd
+    autocmd!
+augroup end
+command Sp source ~/.vim/sessions/space-pizzas

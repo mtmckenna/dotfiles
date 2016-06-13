@@ -1,1 +1,1 @@
-/Users/mckenna/.vimrc.before
+call janus#disable_plugin('nerdtree')

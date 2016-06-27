@@ -30,19 +30,19 @@ root: ~/workspace
 windows:
   - ember:
       root: ~/workspace/space-pizzas-client
-      layout: 2c7b,216x74,0,0{168x74,0,0,0,47x74,169,0,5}
+      layout: 3cb3,208x74,0,0{155x74,0,0,0,52x74,156,0,5}
       panes:
         - vim
         - ember test --serve
   - node:
       root: ~/workspace/space-pizzas-server
-      layout: 2c7b,216x74,0,0{168x74,0,0,0,47x74,169,0,5}
+      layout: 3cb3,208x74,0,0{155x74,0,0,0,52x74,156,0,5}
       panes:
         - vim
         - npm run test-watch
   - shared:
       root: ~/workspace/space-pizzas-shared
-      layout: 2c7b,216x74,0,0{168x74,0,0,0,47x74,169,0,5}
+      layout: 3cb3,208x74,0,0{155x74,0,0,0,52x74,156,0,5}
       panes:
         - vim
         - npm run test-watch
@@ -58,5 +58,14 @@ windows:
           - npm run start-watch
         - shared:
           - cd ~/workspace/space-pizzas-shared
-          - npm run start
-  - bash: #empty
+          - npm run start-watch
+  - bash:
+      layout: even-horizontal
+      panes:
+        - ember:
+          - cd ~/workspace/space-pizzas-client
+        - server:
+          - cd ~/workspace/space-pizzas-server
+        - shared:
+          - cd ~/workspace/space-pizzas-shared
+

@@ -6,3 +6,7 @@ augroup AuNERDTreeCmd
     autocmd!
 augroup end
 command Sp source ~/.vim/sessions/space-pizzas
+
+let g:syntastic_javascript_checkers = ['eslint']
+set expandtab
+set tabstop=2

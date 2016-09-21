@@ -1,0 +1,14 @@
+# ~/.tmuxinator/workspace.yml
+
+name: workspace
+root: ~/workspace
+windows:
+  - app:
+      root: ~/workspace/app
+        - vim
+  - server:
+      root: ~/workspace/app
+        - ember serve
+  - bash:
+      root: ~/workspace/app
+

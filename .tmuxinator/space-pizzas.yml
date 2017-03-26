@@ -40,39 +40,54 @@ windows:
       root: ~/workspace/space-pizzas-shared
       panes:
         - vim
-  - servers:
-      root: ~/workspace/
+  - rails:
+      root: ~/workspace/space-pizzas-rails
+      panes:
+        - vim
+  - ember-server:
+      root: ~/workspace/space-pizzas-ember
       layout: even-horizontal
       panes:
-        - ember:
+        - server:
           - cd ~/workspace/space-pizzas-ember
           - npm run start-lan
-        - node:
-          - cd ~/workspace/space-pizzas-node
-          - npm run start-watch
-        - shared:
-          - cd ~/workspace/space-pizzas-shared
-          - npm run start-watch
-  - tests:
-      root: ~/workspace/
-      layout: even-horizontal
-      panes:
-        - ember:
+        - tests:
           - cd ~/workspace/space-pizzas-ember
           - ember test --serve
-        - node:
-          - cd ~/workspace/space-pizzas-node
-          - npm run test-watch
-        - shared:
-          - cd ~/workspace/space-pizzas-shared
-          - npm run test-watch
-
-  - bash:
+        - bash:
+          - cd ~/workspace/space-pizzas-ember
+  - node-server:
+      root: ~/workspace/space-pizzas-ember
       layout: even-horizontal
       panes:
-        - ember:
-          - cd ~/workspace/space-pizzas-ember
-        - node:
+        - server:
           - cd ~/workspace/space-pizzas-node
-        - shared:
+          - npm run start-watch
+        - tests:
+          - cd ~/workspace/space-pizzas-node
+          - npm run test-watch
+        - bash:
+          - cd ~/workspace/space-pizzas-node
+  - shared-server:
+      root: ~/workspace/space-pizzas-shared
+      layout: even-horizontal
+      panes:
+        - server:
           - cd ~/workspace/space-pizzas-shared
+          - npm run start-watch
+        - tests:
+          - cd ~/workspace/space-pizzas-node
+          - npm run test-watch
+        - bash:
+          - cd ~/workspace/space-pizzas-shared
+  - rails-server:
+      root: ~/workspace/space-pizzas-rails
+      layout: even-horizontal
+      panes:
+        - server:
+          - cd ~/workspace/space-pizzas-rails
+          - bundle exec rails s
+        - tests:
+          - cd ~/workspace/space-pizzas-rails
+        - bash:
+          - cd ~/workspace/space-pizzas-rails

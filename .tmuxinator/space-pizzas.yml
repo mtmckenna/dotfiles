@@ -91,3 +91,13 @@ windows:
           - cd ~/workspace/space-pizzas-rails
         - bash:
           - cd ~/workspace/space-pizzas-rails
+  - other-servers:
+      root: ~/workspace/space-pizzas-rails
+      layout: even-horizontal
+      panes:
+        - sidekiq:
+          - cd ~/workspace/space-pizzas-rails
+          - bundle exec sidekiq -q default -q mailers
+        - mailhog:
+          - cd ~/workspace/space-pizzas-rails
+          - MailHog

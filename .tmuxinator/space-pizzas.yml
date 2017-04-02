@@ -86,7 +86,7 @@ windows:
       panes:
         - server:
           - cd ~/workspace/space-pizzas-rails
-          - bundle exec rails s
+          - rake server
         - tests:
           - cd ~/workspace/space-pizzas-rails
         - bash:

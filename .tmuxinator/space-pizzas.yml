@@ -89,6 +89,7 @@ windows:
           - rake server
         - tests:
           - cd ~/workspace/space-pizzas-rails
+          - bundle exec guard
         - bash:
           - cd ~/workspace/space-pizzas-rails
   - other-servers:

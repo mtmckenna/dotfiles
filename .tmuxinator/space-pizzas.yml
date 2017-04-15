@@ -53,7 +53,7 @@ windows:
           - npm run start-lan
         - tests:
           - cd ~/workspace/space-pizzas-ember
-          - ember test --serve
+          - npm run test -- --serve
         - bash:
           - cd ~/workspace/space-pizzas-ember
   - node-server:

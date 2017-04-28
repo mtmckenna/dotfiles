@@ -54,8 +54,6 @@ windows:
         - tests:
           - cd ~/workspace/space-pizzas-ember
           - npm run test -- --serve
-        - bash:
-          - cd ~/workspace/space-pizzas-ember
   - node-server:
       root: ~/workspace/space-pizzas-ember
       layout: even-horizontal
@@ -66,8 +64,6 @@ windows:
         - tests:
           - cd ~/workspace/space-pizzas-node
           - npm run test-watch
-        - bash:
-          - cd ~/workspace/space-pizzas-node
   - shared-server:
       root: ~/workspace/space-pizzas-shared
       layout: even-horizontal
@@ -78,8 +74,6 @@ windows:
         - tests:
           - cd ~/workspace/space-pizzas-node
           - npm run test-watch
-        - bash:
-          - cd ~/workspace/space-pizzas-shared
   - rails-server:
       root: ~/workspace/space-pizzas-rails
       layout: even-horizontal
@@ -90,8 +84,6 @@ windows:
         - tests:
           - cd ~/workspace/space-pizzas-rails
           - bundle exec guard
-        - bash:
-          - cd ~/workspace/space-pizzas-rails
   - other-servers:
       root: ~/workspace/space-pizzas-rails
       layout: even-horizontal

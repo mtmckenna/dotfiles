@@ -90,7 +90,7 @@ windows:
       panes:
         - sidekiq:
           - cd ~/workspace/space-pizzas-rails
-          - bundle exec sidekiq -q default -q mailers
+          - bundle exec sidekiq -q default_rails_queue
         - mailhog:
           - cd ~/workspace/space-pizzas-rails
           - MailHog

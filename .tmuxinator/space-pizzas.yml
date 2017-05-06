@@ -72,7 +72,7 @@ windows:
           - cd ~/workspace/space-pizzas-shared
           - npm run start-watch
         - tests:
-          - cd ~/workspace/space-pizzas-node
+          - cd ~/workspace/space-pizzas-shared
           - npm run test-watch
   - rails-server:
       root: ~/workspace/space-pizzas-rails

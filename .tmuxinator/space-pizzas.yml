@@ -94,3 +94,6 @@ windows:
         - mailhog:
           - cd ~/workspace/space-pizzas-rails
           - MailHog
+        - three-docs:
+          - cd ~/workspace/three.js
+          - python -m SimpleHTTPServer

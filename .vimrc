@@ -7,6 +7,11 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'ervandew/supertab'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'scrooloose/nerdcommenter'
+Plug 'vim-syntastic/syntastic'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'jnurmine/zenburn'
@@ -39,3 +44,26 @@ set number
 
 " Highlight current line
 set cursorline
+
+" Capital w saves the file
+command WQ wq
+command Wq wq
+command W w
+
+" Don't wrap lines
+set nowrap
+
+" Set swapfile directory
+set swapfile
+set directory=~/.vim/tmp
+
+" Syntastic
+let g:syntastic_javascript_checkers = ['eslint']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0

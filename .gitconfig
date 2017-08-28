@@ -9,6 +9,5 @@
 	rebase = true
 [core]
 	editor = /usr/bin/vim
-	autocrlf = false
 [credential]
 	helper = osxkeychain

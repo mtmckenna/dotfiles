@@ -19,7 +19,7 @@ call plug#end()
 
 colorscheme zenburn
 
-set wildignore+=*/tmp/*,*/dist/*,*/log/*,*/node_modules/*,*/bower_components/*,*/electron-builds/*,*.so,*.swp,*.zip
+set wildignore+=**/tmp/*,**/dist/*,**/log/*,**/node_modules/*,**/bower_components/*,**/electron-builds/*,*.so,*.swp,*.zip
 
 " no left scrollbar
 set guioptions-=L
@@ -38,6 +38,11 @@ map <Leader>vp :VimuxPromptCommand<CR>
 
 " Run last command executed by VimuxRunCommand
 map <Leader>vl :VimuxRunLastCommand<CR>
+
+inoremap jj <Esc>
+
+" Set case insensitive search
+set ic
 
 " Turn on line numbers
 set number

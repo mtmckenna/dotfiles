@@ -1,25 +1,27 @@
+set wildignore+=**/tmp/*,**/dist/*,**/log/*,**/node_modules/*,**/bower_components/*,**/electron-builds/*,*.so,*.swp,*.zip
+
 call plug#begin()
 Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-fugitive'
 Plug 'mileszs/ack.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'ervandew/supertab'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-syntastic/syntastic'
 Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'mustache/vim-mustache-handlebars'
 Plug 'mxw/vim-jsx'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'jnurmine/zenburn'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 colorscheme zenburn
-
-set wildignore+=**/tmp/*,**/dist/*,**/log/*,**/node_modules/*,**/bower_components/*,**/electron-builds/*,*.so,*.swp,*.zip
 
 " no left scrollbar
 set guioptions-=L
@@ -67,8 +69,12 @@ let g:syntastic_javascript_checkers = ['eslint']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+let g:syntastic_cursor_column = 0
+
+" User Silver Searcher instead of Ack in Ack.vim
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" Remove netwr banner
+let g:netrw_banner = 0

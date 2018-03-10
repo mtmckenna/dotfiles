@@ -78,3 +78,6 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " Remove netwr banner
 let g:netrw_banner = 0
+
+" Don't require jsx
+let g:jsx_ext_required = 0

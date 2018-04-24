@@ -19,6 +19,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'jnurmine/zenburn'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'elmcast/elm-vim'
+Plug 'elixir-editors/vim-elixir'
 call plug#end()
 
 colorscheme zenburn

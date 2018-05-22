@@ -4,12 +4,9 @@ call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-fugitive'
 Plug 'mileszs/ack.vim'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'ervandew/supertab'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'easymotion/vim-easymotion'
 Plug 'scrooloose/nerdcommenter'
-Plug 'vim-syntastic/syntastic'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'mustache/vim-mustache-handlebars'
@@ -20,7 +17,8 @@ Plug 'jnurmine/zenburn'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elmcast/elm-vim'
-Plug 'elixir-editors/vim-elixir'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'tikhomirov/vim-glsl'
 call plug#end()
 
 colorscheme zenburn
@@ -52,7 +50,8 @@ set ic
 set number
 
 " Highlight current line
-set cursorline
+" Note: turns out, cursorline is slow.
+"set cursorline
 
 " Capital w saves the file
 command WQ wq
@@ -66,15 +65,6 @@ set nowrap
 set swapfile
 set directory=~/.vim/tmp
 
-" Syntastic
-let g:syntastic_javascript_checkers = ['eslint']
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_cursor_column = 0
-
 " User Silver Searcher instead of Ack in Ack.vim
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
@@ -83,3 +73,7 @@ let g:netrw_banner = 0
 
 " Don't require jsx
 let g:jsx_ext_required = 0
+
+" YouCompleteMe
+set completeopt-=preview
+let g:ycm_add_preview_to_completeopt = 0

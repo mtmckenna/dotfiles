@@ -28,7 +28,7 @@ alias gnew="git log HEAD@{1}..HEAD@{0}"
 alias ggui="git gui"
 alias gh='cd "$(git rev-parse --show-toplevel)"'
 
-export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 export PATH='~/Library/Python/2.7/bin':$PATH
 
 if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then

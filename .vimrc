@@ -1,3 +1,4 @@
+" fzf  nerdcommenter  tsuquyomi  vim-glsl  vim-prettier
 set wildignore+=**/tmp/*,**/dist/*,**/log/*,**/node_modules/*,**/bower_components/*,**/electron-builds/*,*.so,*.swp,*.zi
 set rtp+=/usr/bin
 set swapfile

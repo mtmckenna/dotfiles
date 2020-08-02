@@ -1,16 +1,24 @@
-"fzf  nerdcommenter  syntastic  tsuquyomi  vim-glsl  vim-prettier
+call plug#begin('~/.vim/plugged')
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'preservim/nerdcommenter'
+Plug 'tpope/vim-fugitive'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'tikhomirov/vim-glsl'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+call plug#end()
 
-set wildignore+=**/tmp/*,**/dist/*,**/log/*,**/node_modules/*,**/bower_components/*,**/electron-builds/*,*.so,*.swp,*.zi
-set rtp +=/usr/bin
-set rtp +=~/.fzf
-set rtp +=~/.vim/pack/plugins/start/syntastic/syntax_checkers
+colorscheme dracula
+
+let g:coc_global_extensions = [ 'coc-tsserver' ]
+
+set wildignore+=**/tmp/*,**/dist/*,**/log/*,**/node_modules/*,**/bower_components/*,**/electron-builds/*,*.so,*.swp,*.zip
 set swapfile
 set directory=~/.vim/tmp
 
 set tabstop=2 shiftwidth=2 expandtab
-
-let g:tsuquyomi_javascript_support = 1
-let g:tsuquyomi_disable_quickfix = 1
 
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 set number
@@ -23,22 +31,4 @@ filetype plugin indent on
 :command W w
 
 highlight Normal ctermbg=None
-
-
-let g:tsuquyomi_disable_quickfix = 1
-let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
-let g:syntastic_glsl_checkers = ['cgc']
-let g:syntastic_css_checkers = ['csslint']
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-packadd! dracula
 syntax enable
-colorscheme dracula

@@ -1,0 +1,4 @@
+theme = Dracula
+cursor-style = block
+shell-integration-features=ssh-terminfo,no-cursor
+cursor-style-blink = false

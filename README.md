@@ -3,8 +3,9 @@
 Managed with [GNU Stow](https://www.gnu.org/software/stow/). Each top-level directory is a
 package whose layout mirrors `$HOME`; stowing it symlinks the files into `$HOME`.
 
-Editing is **Neovim + [LazyVim](https://www.lazyvim.org/)**. The `vim` package is kept only
-as a dependency-light fallback for quick edits and remote boxes.
+Editing is **Neovim + [LazyVim](https://www.lazyvim.org/)**. The `vim` package is a
+zero-dependency fallback for quick edits, rescue shells, and boxes where installing neovim
+isn't worth it.
 
 ## Packages
 
@@ -13,7 +14,7 @@ as a dependency-light fallback for quick edits and remote boxes.
 | `nvim`    | `~/.config/nvim`           | neovim ≥ 0.11.2, `rg`, `fd`, `node`, C compiler |
 | `git`     | `~/.gitconfig`             | `git-lfs` (config declares lfs filters)   |
 | `tmux`    | `~/.tmux.conf`             | `tmux`, tpm + plugins                     |
-| `vim`     | `~/.vimrc`                 | `vim`, vim-plug, `node` (fallback editor) |
+| `vim`     | `~/.vimrc`, `~/.vim/`      | stock `vim` only — no plugins, no node    |
 | `ghostty` | `~/.config/ghostty/config` | ghostty (client-side terminal)            |
 
 ## Bootstrap a new machine
@@ -117,14 +118,14 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 From inside tmux: `prefix + I` installs, `prefix + U` updates, `prefix + alt-u` prunes.
 
-### 7. vim fallback (optional)
+### 7. vim fallback
 
-```sh
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-mkdir -p ~/.vim/tmp     # set directory=~/.vim/tmp; vim errors on every file without it
-vim +PlugInstall +qall
-```
+Nothing to do — `stow vim` is the whole install. The package is deliberately
+dependency-free: no plugin manager, no node, no external binaries. Dracula is vendored into
+`vim/.vim/colors/` (MIT, see `LICENSE-dracula`) so it works offline on a fresh box, and the
+swap directory is created on demand by the vimrc.
+
+Don't add a `Plug` block back to it — plugins belong in the `nvim` package.
 
 ## Machine-local config
 

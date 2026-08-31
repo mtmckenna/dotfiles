@@ -1,34 +1,43 @@
-call plug#begin('~/.vim/plugged')
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'preservim/nerdcommenter'
-Plug 'tpope/vim-fugitive'
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'tikhomirov/vim-glsl'
-Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-call plug#end()
+" Fallback editor. Neovim + LazyVim (see the `nvim` package) is the real setup;
+" this is for quick edits, rescue shells, and boxes where installing neovim
+" isn't worth it.
+"
+" Deliberately ZERO dependencies: no plugin manager, no node, no external
+" binaries. Stock vim + this file + the vendored dracula colorscheme is
+" everything. Don't add a Plug block here -- that's what the nvim package is for.
 
-colorscheme dracula
+set nocompatible
+filetype plugin indent on
+syntax enable
 
-let g:coc_global_extensions = [ 'coc-tsserver' ]
-
-set wildignore+=**/tmp/*,**/dist/*,**/log/*,**/node_modules/*,**/bower_components/*,**/electron-builds/*,*.so,*.swp,*.zip
-set swapfile
-set directory=~/.vim/tmp
+" Dracula is vendored into .vim/colors (MIT, see LICENSE-dracula) so it works
+" with no plugin manager and no network. Matches nvim, tmux and ghostty.
+silent! colorscheme dracula
+if !exists('g:colors_name')
+  colorscheme habamax   " ships with vim 9.x
+endif
+highlight Normal ctermbg=None
 
 set tabstop=2 shiftwidth=2 expandtab
-
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 set number
 set nowrap
+set incsearch hlsearch ignorecase smartcase
+set backspace=indent,eol,start
+set laststatus=2
+set wildmenu
+set wildignore+=**/tmp/*,**/dist/*,**/log/*,**/node_modules/*,**/bower_components/*,**/electron-builds/*,*.so,*.swp,*.zip
 
-filetype plugin indent on
+" Keep swap files out of the working tree. Created on demand so a fresh clone
+" needs no mkdir step (the old vimrc errored on every file if it was missing).
+let s:swapdir = expand('~/.vim/swap')
+if !isdirectory(s:swapdir)
+  call mkdir(s:swapdir, 'p', 0700)
+endif
+set swapfile
+let &directory = s:swapdir . '//'
 
-:command WQ wq
-:command Wq wq
-:command W w
-
-highlight Normal ctermbg=None
-syntax enable
+" Typo-savers
+command! W  w
+command! Wq wq
+command! WQ wq
+command! Q  q

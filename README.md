@@ -19,66 +19,101 @@ isn't worth it.
 
 ## Bootstrap a new machine
 
-### 1. Neovim
+### 1. Dependencies (Homebrew)
 
-**Do not use `apt install neovim`** — Ubuntu 24.04 ships 0.9.5 and LazyVim requires
-**0.11.2+**. Install the official tarball into `~/.local` (no sudo needed):
+Homebrew runs on Linux/WSL as well as macOS, so this is **one list for every machine**. It
+also sidesteps the main problem with apt here: Ubuntu 24.04 ships neovim **0.9.5**, and
+LazyVim requires **0.11.2+**.
+
+Install Homebrew (skip if you have it):
 
 ```sh
+# macOS: needs the Xcode CLT (xcode-select --install)
+# Linux/WSL: needs build tools first
+sudo apt install -y build-essential procps curl file git
+
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+On Linux the installer prints a `shellenv` line — add it to your shell profile, since
+nothing else puts brew on `PATH`:
+
+```sh
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+```
+
+Then the whole toolchain, identical on both platforms:
+
+```sh
+brew install stow git git-lfs tmux vim neovim \
+             ripgrep fd node fzf lazygit tree-sitter
+```
+
+| Tool                 | Why                                              |
+| -------------------- | ------------------------------------------------ |
+| `stow`               | this repo                                        |
+| `neovim`             | the editor; must be ≥ 0.11.2 for LazyVim         |
+| `ripgrep`, `fd`      | LazyVim's grep and file pickers                  |
+| `node`               | TypeScript/JSON LSPs and prettier                |
+| `fzf`, `lazygit`     | pickers; `lazygit` is `<leader>gg`               |
+| `tree-sitter`        | LazyVim health errors without the CLI            |
+| `vim`                | the zero-dependency fallback package             |
+
+Brew's `fd` is named `fd` (Debian's package installs it as `fdfind`), and brew's `tmux` is
+3.5+, so the `extended-keys-format` line in `.tmux.conf` becomes active rather than skipped.
+
+<details>
+<summary>Without Homebrew — apt plus manual binaries</summary>
+
+apt is fine for most of this; only a few packages are unusable:
+
+| Package        | apt (24.04) | Verdict                      |
+| -------------- | ----------- | ---------------------------- |
+| `ripgrep`      | 14.1.0      | current, use apt             |
+| `fd-find`      | 9.0.0       | fine, use apt                |
+| `nodejs`/`npm` | 18.19       | fine, use apt                |
+| `stow`/`tmux`/`git` | —      | fine, use apt                |
+| `neovim`       | 0.9.5       | **too old**, LazyVim needs 0.11.2 |
+| `tree-sitter-cli` | 0.20.8   | **too old** for LazyVim v16  |
+| `fzf`          | 0.44        | old but workable             |
+| `lazygit`      | —           | not packaged                 |
+
+```sh
+sudo apt install -y stow git git-lfs tmux vim curl build-essential \
+                    ripgrep fd-find nodejs npm
+ln -sf "$(command -v fdfind)" ~/.local/bin/fd   # LazyVim looks for `fd`
+
+# neovim (apt's is too old)
 curl -fLO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
 tar xzf nvim-linux-x86_64.tar.gz
 rm -rf ~/.local/nvim && mv nvim-linux-x86_64 ~/.local/nvim
 mkdir -p ~/.local/bin && ln -sf ~/.local/nvim/bin/nvim ~/.local/bin/nvim
-```
 
-Make sure `~/.local/bin` is on `PATH` (`~/.profile` does this by default).
-
-On macOS: `brew install neovim` is current enough.
-
-### 2. System packages
-
-```sh
-# Ubuntu / Debian / WSL
-sudo apt update
-sudo apt install -y stow git tmux vim curl build-essential \
-                    ripgrep fd-find nodejs npm git-lfs
-
-# Debian/Ubuntu ship fd as `fdfind`; LazyVim looks for `fd`
-ln -sf "$(command -v fdfind)" ~/.local/bin/fd
-```
-
-```sh
-# macOS
-brew install stow git tmux vim neovim ripgrep fd node git-lfs lazygit fzf tree-sitter
-```
-
-`rg` and `fd` back LazyVim's file/grep pickers; `node` backs the TypeScript/JSON LSPs and
-prettier. **Watch out:** if `rg` seems present but LazyVim reports it missing, check
-`type -a rg` — a shell *function* (some tools inject one) is invisible to neovim, which only
-resolves real binaries on `PATH`.
-
-### 3. User-local binaries (no sudo)
-
-Not packaged, or too old in apt. All install to `~/.local/bin`:
-
-```sh
-# tree-sitter CLI - LazyVim health errors without it
+# tree-sitter CLI
 curl -fsL https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-x64.gz \
   | gunzip > ~/.local/bin/tree-sitter && chmod +x ~/.local/bin/tree-sitter
 
-# lazygit - bound to <leader>gg in LazyVim
+# lazygit
 curl -fsL "$(curl -sL https://api.github.com/repos/jesseduffield/lazygit/releases/latest \
   | grep -oE 'https://[^"]*linux_x86_64\.tar\.gz')" | tar xz -C ~/.local/bin lazygit
 
-# fzf (also used by the vim fallback, which installs it to ~/.fzf)
+# fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
 ln -sf ~/.fzf/bin/fzf ~/.local/bin/fzf
 ```
 
-The `~/.fzf/install` script appends a `source ~/.fzf.bash` line to `~/.bashrc`, which only
-affects interactive shells — hence the extra symlink so neovim sees `fzf` too.
+Make sure `~/.local/bin` is on `PATH` (`~/.profile` does this by default). The
+`~/.fzf/install` script only adds fzf to *interactive* shells via `~/.bashrc`, hence the
+extra symlink so neovim sees it too.
 
-### 4. Clone and stow
+</details>
+
+**Gotcha:** if a tool looks installed but LazyVim reports it missing, run `type -a <tool>`.
+A shell *function* (some tools inject one for `rg`) is invisible to neovim, which only
+resolves real binaries on `PATH`.
+
+### 2. Clone and stow
 
 ```sh
 git clone https://github.com/mtmckenna/dotfiles ~/workspace/dotfiles
@@ -98,7 +133,7 @@ stow --adopt git    # pulls the existing file into the repo, then symlinks
 `--adopt` **overwrites the repo's copy with the machine's copy**, so always `git diff`
 afterward and revert if the incoming version isn't what you want.
 
-### 5. LazyVim plugins
+### 3. LazyVim plugins
 
 ```sh
 nvim --headless "+Lazy! sync" +qa
@@ -107,7 +142,7 @@ nvim --headless "+checkhealth lazyvim" +qa   # confirm nothing's missing
 
 LSP servers install themselves through Mason on first use of a filetype.
 
-### 6. tmux plugins
+### 4. tmux plugins
 
 tpm isn't vendored — clone it, then install:
 
@@ -118,7 +153,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 From inside tmux: `prefix + I` installs, `prefix + U` updates, `prefix + alt-u` prunes.
 
-### 7. vim fallback
+### 5. vim fallback
 
 Nothing to do — `stow vim` is the whole install. The package is deliberately
 dependency-free: no plugin manager, no node, no external binaries. Dracula is vendored into

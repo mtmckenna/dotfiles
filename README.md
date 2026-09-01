@@ -3,9 +3,8 @@
 Managed with [GNU Stow](https://www.gnu.org/software/stow/). Each top-level directory is a
 package whose layout mirrors `$HOME`; stowing it symlinks the files into `$HOME`.
 
-Editing is **Neovim + [LazyVim](https://www.lazyvim.org/)**. The `vim` package is a
-zero-dependency fallback for quick edits, rescue shells, and boxes where installing neovim
-isn't worth it.
+Editing is **Neovim + [LazyVim](https://www.lazyvim.org/)**. There's no vim config here —
+stock `vim` is the rescue-shell fallback, unconfigured on purpose.
 
 ## Packages
 
@@ -14,7 +13,6 @@ isn't worth it.
 | `nvim`    | `~/.config/nvim`           | neovim ≥ 0.11.2, `rg`, `fd`, `node`, C compiler |
 | `git`     | `~/.gitconfig`             | `git-lfs` (config declares lfs filters)   |
 | `tmux`    | `~/.tmux.conf`             | `tmux`, tpm + plugins                     |
-| `vim`     | `~/.vimrc`, `~/.vim/`      | stock `vim` only — no plugins, no node    |
 | `ghostty` | `~/.config/ghostty/config` | ghostty (client-side terminal)            |
 
 ## Bootstrap a new machine
@@ -46,7 +44,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 Then the whole toolchain, identical on both platforms:
 
 ```sh
-brew install stow git git-lfs tmux vim neovim \
+brew install stow git git-lfs tmux neovim \
              ripgrep fd node fzf lazygit tree-sitter
 ```
 
@@ -58,7 +56,6 @@ brew install stow git git-lfs tmux vim neovim \
 | `node`               | TypeScript/JSON LSPs and prettier                |
 | `fzf`, `lazygit`     | pickers; `lazygit` is `<leader>gg`               |
 | `tree-sitter`        | LazyVim health errors without the CLI            |
-| `vim`                | the zero-dependency fallback package             |
 
 Brew's `fd` is named `fd` (Debian's package installs it as `fdfind`), and brew's `tmux` is
 3.5+, so the `extended-keys-format` line in `.tmux.conf` becomes active rather than skipped.
@@ -80,7 +77,7 @@ apt is fine for most of this; only a few packages are unusable:
 | `lazygit`      | —           | not packaged                 |
 
 ```sh
-sudo apt install -y stow git git-lfs tmux vim curl build-essential \
+sudo apt install -y stow git git-lfs tmux curl build-essential \
                     ripgrep fd-find nodejs npm
 ln -sf "$(command -v fdfind)" ~/.local/bin/fd   # LazyVim looks for `fd`
 
@@ -118,7 +115,7 @@ resolves real binaries on `PATH`.
 ```sh
 git clone https://github.com/mtmckenna/dotfiles ~/workspace/dotfiles
 cd ~/workspace/dotfiles
-stow nvim git tmux vim ghostty
+stow nvim git tmux ghostty
 ```
 
 `.stowrc` sets `--target=$HOME`, so always run `stow` from inside the repo.
@@ -152,15 +149,6 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
 
 From inside tmux: `prefix + I` installs, `prefix + U` updates, `prefix + alt-u` prunes.
-
-### 5. vim fallback
-
-Nothing to do — `stow vim` is the whole install. The package is deliberately
-dependency-free: no plugin manager, no node, no external binaries. Dracula is vendored into
-`vim/.vim/colors/` (MIT, see `LICENSE-dracula`) so it works offline on a fresh box, and the
-swap directory is created on demand by the vimrc.
-
-Don't add a `Plug` block back to it — plugins belong in the `nvim` package.
 
 ## Machine-local config
 
